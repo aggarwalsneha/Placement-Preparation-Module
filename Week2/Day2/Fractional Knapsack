@@ -1,0 +1,36 @@
+
+
+/*
+class Item {
+    int value, weight;
+    Item(int x, int y){
+        this.value = x;
+        this.weight = y;
+    }
+}
+*/
+
+class Solution
+{
+    //Function to get the maximum total value in the knapsack.
+    double fractionalKnapsack(int W, Item arr[], int n) 
+    {
+        // Your code here
+        Arrays.sort(arr,(a,b)->b.value*a.weight-a.value*b.weight);
+        double ans=0;
+        for(Item it:arr)
+        {
+            if(W-it.weight>=0)
+            {
+                ans+=it.value;
+                W-=it.weight;
+            }
+            else{
+                double f=(W*it.value*1.0)/it.weight;
+                ans+=f;
+                break;
+            }
+        }
+        return ans;
+    }
+}

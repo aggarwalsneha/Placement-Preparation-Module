@@ -1,0 +1,17 @@
+class Solution{
+    ArrayList<Integer> subsetSums(ArrayList<Integer> arr, int N){
+        // code here
+        ArrayList<Integer>ans=new ArrayList<>();
+        solve(0,0,arr,ans);
+        return ans;
+    }
+    
+    public static void solve(int ind,int sum,ArrayList<Integer>arr,ArrayList<Integer>ans){
+        if(ind==arr.size()){
+            ans.add(sum);
+            return;
+        }
+        solve(ind+1,sum+arr.get(ind),arr,ans);
+        solve(ind+1,sum,arr,ans);
+    }
+}
