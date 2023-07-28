@@ -1,0 +1,34 @@
+class Solution {
+    public String countAndSay(int n) {
+        StringBuilder res = new StringBuilder();
+        for (int i=1;i<=n;i++) {
+            if(i==1){
+                res.append("1");
+                continue;
+            }
+            res=count(res);
+        }
+        return res.toString();
+    }
+    
+    private static StringBuilder count(StringBuilder str) {
+        int count = 0;
+        char c = ' ';
+        StringBuilder s = new StringBuilder();
+        for (int j=0;j<str.length();j++)
+        {
+            if(str.charAt(j)!=c)
+            {
+                if (j>0) {
+                    s.append(count).append(c);
+                }
+                count = 1;
+            } else {
+                count++;
+            }
+            c = str.charAt(j);
+        }
+        s.append(count).append(c);
+        return s;
+    }
+}

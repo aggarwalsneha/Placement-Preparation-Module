@@ -1,0 +1,47 @@
+class Solution {
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        List<List<Integer>>ans=new ArrayList<>();
+        Queue<Pair>q=new LinkedList<>();
+        TreeMap<Integer,TreeMap<Integer,PriorityQueue<Integer>>> hm=new TreeMap<>();
+        if(root==null)
+            return ans;
+        q.offer(new Pair(root,0,0));
+        while(!q.isEmpty())
+        {
+            Pair curr=q.poll();
+            TreeNode node=curr.node;
+            int line=curr.line;
+            int level=curr.level;
+            if(!hm.containsKey(line))
+                hm.put(line,new TreeMap<>());
+            if(!hm.get(line).containsKey(level))
+                hm.get(line).put(level,new PriorityQueue<>());
+            hm.get(line).get(level).add(node.val);
+            if(node.left!=null)
+                q.offer(new Pair(node.left,line-1,level+1));
+            if(curr.node.right!=null)
+                q.offer(new Pair(node.right,line+1,level+1));
+        }
+        for(TreeMap<Integer,PriorityQueue<Integer>>map:hm.values()){
+            ans.add(new ArrayList<Integer>());
+            for(PriorityQueue<Integer> pq:map.values())
+            {
+                while(!pq.isEmpty())
+                ans.get(ans.size()-1).add(pq.poll());
+            }
+        }
+        return ans;
+    }
+}
+
+class Pair{
+    int line;
+    int level;
+    TreeNode node;
+    Pair(TreeNode node,int line,int level)
+    {
+        this.node=node;
+        this.line=line;
+        this.level=level;
+    }
+}
