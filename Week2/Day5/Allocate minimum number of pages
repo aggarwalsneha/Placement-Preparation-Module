@@ -1,0 +1,38 @@
+class Solution 
+{
+    //Function to find minimum number of pages.
+    public static int findPages(int[]A,int N,int M)
+    {
+        //Your code here
+        if(N<M)
+        return -1;
+        int low=0,high=0,sum=0;
+        for(int n:A){
+            low=Math.max(n,low);
+            sum+=n;
+        }
+        high=sum;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            int count=solve(A,N,mid);
+            if(count>M)
+            low=mid+1;
+            else
+            high=mid-1;
+        }
+        return low;
+    }
+    
+    public static int solve(int[] arr,int n,int mid){
+        int per=0,count=1;
+        for(int i=0;i<n;i++){
+            if(per+arr[i]<=mid)
+            per+=arr[i];
+            else{
+                count++;
+                per=arr[i];
+            }
+        }
+        return count;
+    }
+}
